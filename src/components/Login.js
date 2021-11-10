@@ -1,8 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router"
-import "./App.css"
-import { setTokenInHeaders } from "./client"
-import { client } from "./client"
+import "../style/App.css"
+import { setTokenInHeaders, client } from "../services/acelera-mais-api/client"
 
 export const Login = () => {
   const navigate = useNavigate()

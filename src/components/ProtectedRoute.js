@@ -1,5 +1,5 @@
 import React from "react"
-import { Route, Navigate, Outlet, useLocation } from "react-router-dom"
+import { Navigate, Outlet, useLocation } from "react-router-dom"
 
 export const ProtectedRoute = (props) => {
   let location = useLocation()

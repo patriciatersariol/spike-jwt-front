@@ -1,8 +1,8 @@
 import React from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { Login } from "./Login"
-import { ProtectedInfo } from "./ProtectedInfo"
-import { ProtectedRoute } from "./ProtectedRoute"
+import { Login } from "./components/Login"
+import { ProtectedInfo } from "./components/ProtectedInfo"
+import { ProtectedRoute } from "./components/ProtectedRoute"
 
 export const App = () => {
   return (
