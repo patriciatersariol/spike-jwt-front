@@ -2,15 +2,12 @@ import axios from "axios"
 
 export const isAuth = async () => {
   const token = localStorage.getItem("token")
-  try {
-    const response = await axios.get("http://localhost:9000/authenticate", {
+  if (token) {
+    const response = await axios.get("http://localhost:9000/validacao", {
       headers: { Authorization: `Bearer ${token}` }
     })
     console.log(response)
-    return response
-  } catch (error) {
-    console.log(error)
-    return error
+    return true
   }
+  return false
 }
-console.log(isAuth())

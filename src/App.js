@@ -9,8 +9,8 @@ export const App = () => {
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Login />} />
-        <Route path="/auth" element={<ProtectedRoute />}>
-          <Route path="/auth" element={<ProtectedInfo />} />
+        <Route path="/protected" element={<ProtectedRoute />}>
+          <Route path="/protected" element={<ProtectedInfo />} />
         </Route>
       </Routes>
     </BrowserRouter>

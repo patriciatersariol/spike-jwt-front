@@ -1,7 +1,8 @@
 import { useState } from "react"
-import axios from "axios"
+import { useNavigate } from "react-router"
 import "./App.css"
-import { useNavigate } from "react-router-dom"
+import { setTokenInHeaders } from "./client"
+import { client } from "./client"
 
 export const Login = () => {
   const navigate = useNavigate()
@@ -16,42 +17,20 @@ export const Login = () => {
     setPassword(target.value)
   }
 
-  const validandoOtoken = async (token) => {
-    try {
-      const response = await axios.get("http://localhost:9000/validacao", {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      console.log(response)
-      if (response.status(401)) throw new Error("Token inválido")
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  // const getProtectedPage = async (token) => {
-  //   const response = await axios.get("http://localhost:9000/page", {
-  //     headers: { Authorization: `Bearer ${token}` }
-  //   })
-  //   console.log(response)
-  // }
-
   const handlerClick = async (event) => {
     event.preventDefault()
     const user = { email, password }
-    const response = await axios.post("http://localhost:9000/login", user)
-    console.log(response.data)
-    const token = response.data.accessToken
-    window.localStorage.setItem("token", token)
+    const response = await client.post("http://localhost:9000/login", user)
+    // console.log(response.data)
+    const {
+      data: { accessToken }
+    } = response
 
-    validandoOtoken(token)
-    navigate("/auth")
-    // getProtectedPage(token)
-
-    // const autorized = isAuth()
-
-    // if (autorized) {
-    //   alert("autorizado")
-    // }
+    if (accessToken) {
+      localStorage.setItem("token", accessToken)
+      setTokenInHeaders(accessToken)
+      navigate("/protected")
+    }
   }
 
   return (
