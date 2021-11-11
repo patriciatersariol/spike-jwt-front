@@ -1,9 +1,10 @@
 import { useState } from "react"
-import axios from "axios"
-import "./App.css"
-import { isAuth } from "./isAuth"
+import { useNavigate } from "react-router"
+import "../style/App.css"
+import { setTokenInHeaders, client } from "../services/acelera-mais-api/client"
 
 export const Login = () => {
+  const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
@@ -18,22 +19,17 @@ export const Login = () => {
   const handlerClick = async (event) => {
     event.preventDefault()
     const user = { email, password }
-    const response = await axios.post("http://localhost:9000/login", user)
-    console.log(response.data)
-    const token = response.data.accessToken
-    window.localStorage.setItem("token", token)
+    const response = await client.post("http://localhost:9000/login", user)
+    // console.log(response.data)
+    const {
+      data: { accessToken }
+    } = response
 
-    if (isAuth()) {
-      window.location.pathname = "/protected"
+    if (accessToken) {
+      localStorage.setItem("token", accessToken)
+      setTokenInHeaders(accessToken)
+      navigate("/protected")
     }
-
-    //     if (tokenLocalStorage) {
-    //       axios
-    //         .get("http://localhost:9000/page", {
-    //           headers: { Authorization: `Bearer ${tokenLocalStorage}` }
-    //         })
-    //         .then((res) => console.log(res))
-    //     }
   }
 
   return (
