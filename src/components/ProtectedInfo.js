@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router"
 import { client } from "../services/acelera-mais-api/client"
 
 export const ProtectedInfo = () => {
+  const navigate = useNavigate()
   const [dadosApi, setDadosApi] = useState([])
 
   useEffect(() => {
-    client("/hiring-process").then((res) => setDadosApi(res.data))
-  }, [])
+    client("/hiring-process")
+      .then((res) => res.data)
+      .then((data) => {
+        if (data.name === "JsonWebTokenError") {
+          navigate("/")
+        }
+        setDadosApi(data)
+      })
+  }, [navigate])
 
   return (
     <div>
