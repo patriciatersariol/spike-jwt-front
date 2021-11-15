@@ -16,11 +16,12 @@ export const Login = () => {
     setPassword(target.value)
   }
 
-  const handlerClick = async (event) => {
+  const handleClick = async (event) => {
     event.preventDefault()
     const user = { email, password }
     const response = await client.post("http://localhost:9000/login", user)
-    // console.log(response.data)
+    console.log(response.data)
+
     const {
       data: { accessToken }
     } = response
@@ -53,7 +54,7 @@ export const Login = () => {
             ></input>
           </label>
         </div>
-        <button onClick={handlerClick}>Iniciar sessão</button>
+        <button onClick={handleClick}>Iniciar sessão</button>
       </div>
     </>
   )

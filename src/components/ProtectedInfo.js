@@ -8,12 +8,11 @@ export const ProtectedInfo = () => {
 
   useEffect(() => {
     client("/hiring-process")
-      .then((res) => res.data)
-      .then((data) => {
-        if (data.name === "JsonWebTokenError") {
-          navigate("/")
-        }
-        setDadosApi(data)
+      .then((res) => setDadosApi(res.data))
+      .catch((err) => {
+        console.error(err)
+        setDadosApi([])
+        navigate("/")
       })
   }, [navigate])
 
